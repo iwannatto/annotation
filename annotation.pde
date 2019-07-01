@@ -25,16 +25,20 @@ void draw() {
   image(img, 0, 0);
 
   fill(255);
-  for (PVector v : points)
-    ellipse(v.x, v.y, 10, 10);
+  if (points.size() == 0) { return; }
+  PVector u = points.get(0);
+  for (PVector v : points) {
+    line(u.x, u.y, v.x, v.y);
+    u = v;
+  }
 }
 
-void mousePressed() {
+void mouseDragged() {
   points.add(new PVector(mouseX, mouseY));
 }
 
 void done() {
-  println(""+(millis()-time)+"ms");
+  println((millis()-time)+" ms");
   time= millis(); 
 
   index++;
