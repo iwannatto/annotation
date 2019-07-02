@@ -3,7 +3,7 @@ import controlP5.*;
 ControlP5 Button;
 PImage img;  
 int index = 0;
-ArrayList<ArrayList<PVector>> points = new ArrayList();
+ArrayList<ArrayList<PVector>> strokes = new ArrayList();
 ArrayList<PVector> oneStroke = new ArrayList();
 float time;
 float penColorRgb;
@@ -42,8 +42,8 @@ void draw() {
   image(img, 0, 0);
 
   fill(255);
-  if (points.size() == 0) { return; }
-  for (ArrayList<PVector> s : points) {
+  if (strokes.size() == 0) { return; }
+  for (ArrayList<PVector> s : strokes) {
     if (s.size() == 0) { continue; }
     PVector u = s.get(0);
     for (PVector v : s) {
@@ -58,7 +58,7 @@ void draw() {
 void mousePressed() {
   if (mouseX <= img.width && mouseY <= img.height) {
     oneStroke = new ArrayList();
-    points.add(oneStroke);
+    strokes.add(oneStroke);
   } else {
     oneStroke = null;
   }
@@ -76,7 +76,7 @@ void done() {
 
   index++;
   img = loadImage("images/image"+index+".jpg");  
-  points.clear();
+  strokes.clear();
 }
 
 void setPenColor1() {
@@ -88,7 +88,7 @@ void setPenColor2() {
 }
 
 void undo() {
-  if (points.size() != 0) {
-    points.remove(points.size() - 1);
+  if (strokes.size() != 0) {
+    strokes.remove(strokes.size() - 1);
   }
 }
