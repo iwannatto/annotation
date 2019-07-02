@@ -1,7 +1,7 @@
 import controlP5.*;
 
 ControlP5 Button;
-PImage img;  
+PImage img, pen, pen1, pen2;  
 int index = 0;
 ArrayList<ArrayList<PVector>> strokes = new ArrayList();
 ArrayList<PVector> oneStroke = new ArrayList();
@@ -12,6 +12,8 @@ void setup() {
   size(1024, 768);
   
   img = loadImage("images/image0.jpg");
+  pen1 = loadImage("pen1.png");
+  pen2 = loadImage("pen2.png");
   
   Button = new ControlP5(this);
   Button.addButton("done")
@@ -32,6 +34,7 @@ void setup() {
     .setSize(100, 40);
 
   setPenColor1();
+  pen = pen1;
 
   time= millis();
 }
@@ -40,15 +43,20 @@ void setup() {
 void draw() {
   background(0);
   image(img, 0, 0);
+  
+  if (mouseIsOnImage()) {
+    cursor(pen, 0, pen.height - 1);
+  } else {
+    cursor(ARROW);
+  }
 
-  fill(255);
   if (strokes.size() == 0) { return; }
   for (ArrayList<PVector> s : strokes) {
     if (s.size() == 0) { continue; }
     PVector u = s.get(0);
     for (PVector v : s) {
       stroke(penColorRgb);
-      strokeWeight(4);
+      strokeWeight(3);
       line(u.x, u.y, v.x, v.y);
       u = v;
     }
@@ -56,7 +64,7 @@ void draw() {
 }
 
 void mousePressed() {
-  if (mouseX <= img.width && mouseY <= img.height) {
+  if (mouseIsOnImage()) {
     oneStroke = new ArrayList();
     strokes.add(oneStroke);
   } else {
@@ -81,14 +89,20 @@ void done() {
 
 void setPenColor1() {
   penColorRgb = 0;
+  pen = pen1;
 }
 
 void setPenColor2() {
   penColorRgb = 255;
+  pen = pen2;
 }
 
 void undo() {
   if (strokes.size() != 0) {
     strokes.remove(strokes.size() - 1);
   }
+}
+
+boolean mouseIsOnImage() {
+  return mouseX <= img.width && mouseY <= img.height;
 }
