@@ -1,33 +1,46 @@
 import controlP5.*;
 
 ControlP5 Button;
-PImage img, pen, pen1, pen2;  
+PImage img, pen, pen1, pen2, pen1_icon, pen2_icon;  
 int index = 0;
 ArrayList<ArrayList<PVector>> strokes = new ArrayList();
 ArrayList<PVector> oneStroke = new ArrayList();
 float time;
-float penColorRgb;
+int penColorRgb;
+
+PImage icon(PImage pen_img) {
+  PImage icon = pen_img.copy();
+  //icon.resize(icon.width * 3, icon.height * 3);
+  //color black = icon.pixels[0], white = color(255, 255, 255);
+  //for (int i = 0; i < icon.width * icon.height; ++i) {
+  //  if (icon.pixels[i] == black) {
+  //    icon.pixels[i] = white;
+  //  }
+  //}
+  //icon.updatePixels();
+  return icon;
+}
 
 void setup() {
   size(1024, 768);
   
   img = loadImage("images/image0.jpg");
-  pen1 = loadImage("pen1.png");
-  pen2 = loadImage("pen2.png");
-  
+  pen1 = loadImage("58_171_210.png");
+  pen2 = loadImage("223_86_86.png");
+  pen1_icon = icon(pen1);
+  pen2_icon = icon(pen2);
+    
   Button = new ControlP5(this);
   Button.addButton("done")
-    .setLabel("Done")
-    .setPosition(10, height-50)
-    .setSize(100, 40);
+    .setLabel("ok!")
+    .setPosition(10, height-130)
+    .setSize(150, 60);
   Button.addButton("setPenColor1")
-    .setLabel("pen1")
-    .setPosition(700, 50)
-    .setSize(100, 40);
+    .setImage(pen1_icon)
+    .setPosition(700, 50);
   Button.addButton("setPenColor2")
-    .setLabel("pen2")
-    .setPosition(700, 100)
-    .setSize(100, 40);
+    .setImage(pen2_icon)
+    .setPosition(700, 100);
   Button.addButton("undo")
     .setLabel("undo")
     .setPosition(700, 150)
@@ -88,12 +101,12 @@ void done() {
 }
 
 void setPenColor1() {
-  penColorRgb = 0;
+  penColorRgb = #3AABD2;
   pen = pen1;
 }
 
 void setPenColor2() {
-  penColorRgb = 255;
+  penColorRgb = #DF5656;
   pen = pen2;
 }
 
